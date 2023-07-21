@@ -25,7 +25,7 @@
         </div>
         <div class="form-group mb-2">
             <label for="">Description</label>
-            <textarea class="form-control editor" name="description" rows="8" placeholder="Description">{{ $task->description }}</textarea>
+            <textarea class="form-control" name="description" rows="8" placeholder="Description">{{ $task->description }}</textarea>
         </div>
         <div class="form-group mb-2">
             <input type="submit" value="Save" class="btn btn-primary">

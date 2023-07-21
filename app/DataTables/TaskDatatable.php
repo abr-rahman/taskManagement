@@ -27,7 +27,7 @@ class TaskDatatable extends DataTable
                 $html .= '<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>';
                 $html .= '<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">';
                 $html .= '<a class="dropdown-item edit-btn"  href="' . route('tasks.edit', $row->id) . '">Edit</a>';
-                $html .= '<a class="dropdown-item delete-btn" href="' . route('tasks.destroy', $row->id) . '">Delete</a>';
+                $html .= '<a class="dropdown-item delete-btn border-bottom" href="' . route('tasks.destroy', $row->id) . '">Delete</a>';
                 $html .= '</div>';
                 $html .= '</div>';
 
@@ -35,10 +35,10 @@ class TaskDatatable extends DataTable
             })
             ->editColumn('status', function ($row) {
                 if ($row->status == 1) {
-                    $html = '<div class="col-sm-5"><a href="' . route('task.active', $row->id) . '" class="btn btn-success" id="check_status"></a> </div>';
+                    $html = '<div class="col-sm-5"><a href="' . route('task.active', $row->id) . '" class="btn btn-info btn-sm badge">Active</a> </div>';
                     return $html;
-                } else {
-                    $html = '<div class="col-sm-5"><a href="' . route('task.inactive', $row->id) . '" class="btn btn-danger" id="check_status"></a> </div>';
+                }  else {
+                    $html = '<div class="col-sm-5"><a href="' . route('task.inactive', $row->id) . '" class="btn btn-danger btn-sm badge">In-active</a> </div>';
                     return $html;
                 }
             })
@@ -46,16 +46,12 @@ class TaskDatatable extends DataTable
                 $html = '<div class="col-sm-5"><span class="badge">'. $row->user->name.'</span> </div>';
                 return $html;
             })
-            ->editColumn('asign', function ($row) {
-                $html = '<div class="col-sm-5"><span>'. $row->user->name.'</span> </div>';
-                return $html;
-            })
             ->editColumn('date_line', function ($row) {
-                    $html = '<div class="col-sm-5"><span>' . date('Y-m-d', strtotime($row->date_line)) . '</span> </div>';
+                    $html = '<div class="col-sm-5"><span class="badge">' . date('Y-m-d', strtotime($row->date_line)) . '</span> </div>';
                     return $html;
             })
             ->editColumn('created_at', function ($row) {
-                    $html = '<div class="col-sm-5"><span>' . date('Y-m-d', strtotime($row->created_at)) . '</span> </div>';
+                    $html = '<div class="col-sm-5"><span class="badge">' . date('Y-m-d', strtotime($row->created_at)) . '</span> </div>';
                     return $html;
             })
             ->rawColumns(['action', 'status', 'asign', 'date_line', 'created_at']);
@@ -69,7 +65,7 @@ class TaskDatatable extends DataTable
      */
     public function query(Task $model)
     {
-        return $model->newQuery();
+        return $model->newQuery()->orderBy('created_at', 'desc');
     }
 
     /**
